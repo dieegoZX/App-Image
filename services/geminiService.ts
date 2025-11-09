@@ -6,14 +6,19 @@ if (!process.env.API_KEY) {
     throw new Error("API_KEY environment variable not set");
 }
 
-// Fix: Add explicit types for the function parameter and return value to resolve type inference issues.
-export const fileToBase64 = (file: File): Promise<{ base64Data: string; mimeType: string }> => {
+// Fix: Added an interface to define the return type of the fileToBase64 function.
+interface FileConversionResult {
+    base64Data: string;
+    mimeType: string;
+}
+
+// Fix: Added types to the function parameter and return value to allow TypeScript to correctly infer the type of the resolved promise.
+export const fileToBase64 = (file: File): Promise<FileConversionResult> => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
             const result = reader.result;
-            // Fix: Add a type guard to ensure `result` is a string before calling `split`.
             if (typeof result === 'string') {
                 const base64Data = result.split(',')[1];
                 resolve({ base64Data, mimeType: file.type });
@@ -25,6 +30,7 @@ export const fileToBase64 = (file: File): Promise<{ base64Data: string; mimeType
     });
 };
 
+// Fix: Added types to function parameters for improved type safety.
 export const generateImage = async (prompt: string, aspectRatio: string) => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateImages({
@@ -44,6 +50,7 @@ export const generateImage = async (prompt: string, aspectRatio: string) => {
     return base64ImageBytes;
 };
 
+// Fix: Added types to function parameters for improved type safety.
 export const editImage = async (base64Data: string, mimeType: string, prompt: string) => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
@@ -68,6 +75,7 @@ export const editImage = async (base64Data: string, mimeType: string, prompt: st
     throw new Error("Image editing failed, no image data in response.");
 };
 
+// Fix: Added types to function parameters for improved type safety.
 export const analyzeImageSimple = async (base64Data: string, mimeType: string, prompt: string) => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
@@ -82,6 +90,7 @@ export const analyzeImageSimple = async (base64Data: string, mimeType: string, p
     return response.text;
 };
 
+// Fix: Added types to function parameters for improved type safety.
 export const analyzeImageComplex = async (base64Data: string, mimeType: string, prompt: string) => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
