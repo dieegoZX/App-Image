@@ -1,0 +1,5 @@
+{
+  "name": "DGM Image Studio",
+  "description": "Um poderoso aplicativo da web que permite aos usuários gerar, editar e analisar imagens usando os modelos de IA do Google Gemini. Os recursos incluem geração de texto para imagem com controle de proporção, edição de imagem baseada em prompt e análise detalhada de imagem com um 'Modo de Pensamento' opcional de alto raciocínio.",
+  "requestFramePermissions": []
+}
