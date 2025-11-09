@@ -1,4 +1,5 @@
-export const generationPrompts: string[] = [
+
+export const generationPrompts = [
   "Um leão majestoso com uma coroa de estrelas, arte digital",
   "Uma floresta encantada com cogumelos brilhantes e vaga-lumes",
   "Um robô retro-futurista servindo café em uma lanchonete dos anos 1950",
@@ -7,7 +8,7 @@ export const generationPrompts: string[] = [
   "Uma casa na árvore fantástica construída em uma árvore gigante e antiga",
 ];
 
-export const editingPrompts: string[] = [
+export const editingPrompts = [
   "Adicione um céu dramático e tempestuoso",
   "Mude a estação para o outono",
   "Faça parecer uma pintura a óleo",

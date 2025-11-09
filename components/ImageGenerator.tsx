@@ -1,16 +1,17 @@
+
 import React, { useState } from 'react';
 import { generateImage } from '../services/geminiService';
-import { aspectRatios, AspectRatio } from '../types';
+import { aspectRatios } from '../types';
 import Spinner from './Spinner';
 import PromptSuggestions from './PromptSuggestions';
 import { generationPrompts } from '../data/promptSuggestions';
 
-const ImageGenerator: React.FC = () => {
-  const [prompt, setPrompt] = useState<string>('');
-  const [aspectRatio, setAspectRatio] = useState<AspectRatio>('1:1');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+const ImageGenerator = () => {
+  const [prompt, setPrompt] = useState('');
+  const [aspectRatio, setAspectRatio] = useState('1:1');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [generatedImage, setGeneratedImage] = useState(null);
 
   const handleGenerate = async () => {
     if (!prompt) {
@@ -62,7 +63,7 @@ const ImageGenerator: React.FC = () => {
           id="aspectRatio"
           className="w-full bg-gray-900 border border-gray-600 rounded-lg p-3 text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
           value={aspectRatio}
-          onChange={(e) => setAspectRatio(e.target.value as AspectRatio)}
+          onChange={(e) => setAspectRatio(e.target.value)}
         >
           {aspectRatios.map((ratio) => (
             <option key={ratio} value={ratio}>

@@ -1,19 +1,20 @@
+
 import React, { useState, useRef } from 'react';
 import { editImage, fileToBase64 } from '../services/geminiService';
 import Spinner from './Spinner';
 import PromptSuggestions from './PromptSuggestions';
 import { editingPrompts } from '../data/promptSuggestions';
 
-const ImageEditor: React.FC = () => {
-  const [prompt, setPrompt] = useState<string>('');
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [editedImage, setEditedImage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+const ImageEditor = () => {
+  const [prompt, setPrompt] = useState('');
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [editedImage, setEditedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     if (file) {
       setUploadedImage(file);

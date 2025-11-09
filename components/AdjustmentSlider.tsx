@@ -1,15 +1,7 @@
+
 import React from 'react';
 
-interface AdjustmentSliderProps {
-  label: string;
-  value: number;
-  min?: number;
-  max?: number;
-  step?: number;
-  onChange: (value: number) => void;
-}
-
-const AdjustmentSlider: React.FC<AdjustmentSliderProps> = ({
+const AdjustmentSlider = ({
   label,
   value,
   min = 0,

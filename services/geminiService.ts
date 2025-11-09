@@ -1,24 +1,31 @@
+
+
 import { GoogleGenAI, Modality } from "@google/genai";
-import { AspectRatio } from '../types';
 
 if (!process.env.API_KEY) {
     throw new Error("API_KEY environment variable not set");
 }
 
+// Fix: Add explicit types for the function parameter and return value to resolve type inference issues.
 export const fileToBase64 = (file: File): Promise<{ base64Data: string; mimeType: string }> => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            const result = reader.result as string;
-            const base64Data = result.split(',')[1];
-            resolve({ base64Data, mimeType: file.type });
+            const result = reader.result;
+            // Fix: Add a type guard to ensure `result` is a string before calling `split`.
+            if (typeof result === 'string') {
+                const base64Data = result.split(',')[1];
+                resolve({ base64Data, mimeType: file.type });
+            } else {
+                reject(new Error("Failed to read file as a data URL."));
+            }
         };
         reader.onerror = (error) => reject(error);
     });
 };
 
-export const generateImage = async (prompt: string, aspectRatio: AspectRatio): Promise<string> => {
+export const generateImage = async (prompt: string, aspectRatio: string) => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateImages({
         model: 'imagen-4.0-generate-001',
@@ -37,7 +44,7 @@ export const generateImage = async (prompt: string, aspectRatio: AspectRatio): P
     return base64ImageBytes;
 };
 
-export const editImage = async (base64Data: string, mimeType: string, prompt: string): Promise<string> => {
+export const editImage = async (base64Data: string, mimeType: string, prompt: string) => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image',
@@ -61,7 +68,7 @@ export const editImage = async (base64Data: string, mimeType: string, prompt: st
     throw new Error("Image editing failed, no image data in response.");
 };
 
-export const analyzeImageSimple = async (base64Data: string, mimeType: string, prompt: string): Promise<string> => {
+export const analyzeImageSimple = async (base64Data: string, mimeType: string, prompt: string) => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
@@ -75,7 +82,7 @@ export const analyzeImageSimple = async (base64Data: string, mimeType: string, p
     return response.text;
 };
 
-export const analyzeImageComplex = async (base64Data: string, mimeType: string, prompt: string): Promise<string> => {
+export const analyzeImageComplex = async (base64Data: string, mimeType: string, prompt: string) => {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-pro',

@@ -1,13 +1,12 @@
+
 import React, { useState } from 'react';
 import ImageGenerator from './components/ImageGenerator';
 import ImageEditor from './components/ImageEditor';
 import ImageAnalyzer from './components/ImageAnalyzer';
 import TabButton from './components/TabButton';
 
-type Tab = 'generate' | 'edit' | 'analyze';
-
-const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('generate');
+const App = () => {
+  const [activeTab, setActiveTab] = useState('generate');
 
   const renderContent = () => {
     switch (activeTab) {

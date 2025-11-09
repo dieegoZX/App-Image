@@ -1,12 +1,7 @@
+
 import React from 'react';
 
-interface PromptSuggestionsProps {
-  title: string;
-  prompts: string[];
-  onSelectPrompt: (prompt: string) => void;
-}
-
-const PromptSuggestions: React.FC<PromptSuggestionsProps> = ({ title, prompts, onSelectPrompt }) => {
+const PromptSuggestions = ({ title, prompts, onSelectPrompt }) => {
   return (
     <div>
       <h4 className="text-sm font-medium text-gray-400 mb-3">{title}</h4>

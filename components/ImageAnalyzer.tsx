@@ -1,18 +1,19 @@
+
 import React, { useState, useRef } from 'react';
 import { analyzeImageSimple, analyzeImageComplex, fileToBase64 } from '../services/geminiService';
 import Spinner from './Spinner';
 
-const ImageAnalyzer: React.FC = () => {
-  const [prompt, setPrompt] = useState<string>('Descreva esta imagem em detalhes.');
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [analysis, setAnalysis] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [useThinkingMode, setUseThinkingMode] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+const ImageAnalyzer = () => {
+  const [prompt, setPrompt] = useState('Descreva esta imagem em detalhes.');
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [analysis, setAnalysis] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [useThinkingMode, setUseThinkingMode] = useState(false);
+  const fileInputRef = useRef(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     if (file) {
       setUploadedImage(file);
